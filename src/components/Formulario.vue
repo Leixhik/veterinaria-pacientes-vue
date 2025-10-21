@@ -22,10 +22,8 @@
             return
         }
 
-        console.log('agregando...')
-        
     }
-    
+
 </script>
 
 <template>
@@ -33,19 +31,23 @@
         <h2 class="font-black text-3xl text-center">Seguimiento Pacientes</h2>
 
         <p class="text-lg mt-5 text-center mb-10">
-            Añade Pacientes y 
+            Añade Pacientes y
             <span class="text-indigo-600 font-bold">Adminístalos</span>
         </p>
 
-        
-        <form 
-           class="bg-white shadow-md rounded-lg py-10 px-5 mb-10" 
+        <Alerta
+            v-if="alerta.mensaje"
+            :alerta="alerta"
+        />
+
+        <form
+           class="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
            @submit.prevent="validar"
         >
 
             <!-- Campo para Datos Perro -->
             <div>
-                <label 
+                <label
                     for="mascota"
                     class="block text-gray-700 uppercase font-bold"
                 >
@@ -63,7 +65,7 @@
 
             <!-- Campo para Datos Dueño -->
             <div>
-                <label 
+                <label
                     for="propietario"
                     class="block text-gray-700 uppercase font-bold"
                 >
@@ -79,10 +81,10 @@
 
                 />
             </div>
-            
+
             <!-- Campo para Email de Contacto-->
             <div>
-                <label 
+                <label
                     for="email"
                     class="block text-gray-700 uppercase font-bold"
                 >
@@ -98,10 +100,10 @@
 
                 />
             </div>
-            
+
             <!-- Campo para Alta de Paciente-->
             <div>
-                <label 
+                <label
                     for="alta"
                     class="block text-gray-700 uppercase font-bold"
                 >
@@ -119,7 +121,7 @@
 
             <!-- Campo para Síntomas-->
             <div>
-                <label 
+                <label
                     for="sintomas"
                     class="block text-gray-700 uppercase font-bold"
                 >
@@ -145,5 +147,3 @@
         </form>
     </div>
 </template>
-
-
