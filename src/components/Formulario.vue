@@ -3,8 +3,16 @@
 
     const paciente = reactive({
         nombre: '',
-        propietario: ''
+        propietario: '',
+        email: '',
+        alta: '',
+        sintomas: ''
     })
+
+    const validar = () => {
+
+        console.log('Validando...')
+    }
     
 </script>
 
@@ -17,12 +25,12 @@
             <span class="text-indigo-600 font-bold">Adminístalos</span>
         </p>
 
+        
         <form 
            class="bg-white shadow-md rounded-lg py-10 px-5 mb-10" 
+           @submit.prevent="validar"
         >
 
-            {{ paciente.nombre }}
-            {{ paciente.propietario }}
             <!-- Campo para Datos Perro -->
             <div>
                 <label 
@@ -74,6 +82,8 @@
                     type="email"
                     placeholder="Email del Propietario"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    v-model="paciente.email"
+
                 />
             </div>
             
@@ -90,6 +100,8 @@
                     id="alta"
                     type="date"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    v-model="paciente.alta"
+
                 />
             </div>
 
@@ -106,6 +118,8 @@
                     id="sintomas"
                     placeholder="Describe los síntomas del paciente:"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md h-40"
+                    v-model="paciente.sintomas"
+
                 />
             </div>
 
