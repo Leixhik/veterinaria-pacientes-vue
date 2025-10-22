@@ -7,11 +7,16 @@
         mensaje: ''
     })
 
+    /* ↓ Qué hace: Agrega un nuevo evento para notificar cuando se debe guardar el paciente. Beneficio: Separa la lógica de validación (en Formulario) de la lógica de guardado (en App). */
     const emit = defineEmits(['update:nombre', 'update:propietario', 'update:email', 'update:alta', 'update:sintomas', 'guardar-paciente']) 
-    // Declara que el componente Formulario pueda emitir un evento llamado update:nombre
+    // ↑ Declara que el componente Formulario pueda emitir un evento llamado update:nombre
     /* Esto permite la comunicación del componente hijo (Formulario) hacia el padre (App.vue), enviando cambios del input hacia arriba. */
+    /* Qué hace: Declara todos los eventos que el componente puede emitir.
+       Beneficio: Ahora TODOS los campos del formulario tienen comunicación bidireccional con App.vue, no solo el nombre. */
 
-    const props = defineProps({
+    const props = defineProps({ 
+    /* ↑ ↓ Qué hace: Define todas las propiedades que el componente recibe del padre.
+    Beneficio: El formulario ahora puede recibir y mostrar datos completos del paciente. */
         nombre: {
             type: String,
             required: true
@@ -34,7 +39,7 @@
         }
     })
     /**
-     * Props del componente Formulario
+     * ↑ Props del componente Formulario
      * 
      * @property {String} nombre - Nombre del paciente (requerido)
      * Este prop es obligatorio y debe ser de tipo String. Se utiliza para
@@ -43,13 +48,14 @@
 
 
     const validar = () => {
-        if(Object.values(props).includes('')){
+        if(Object.values(props).includes('')){ /* ← Qué hace: Valida que todas las props estén llenas antes de enviar. Beneficio: La validación ahora funciona correctamente con el sistema de props */
             alerta.mensaje = 'Todos los campos son obligatorios'
             alerta.tipo = 'error'
             return
         }
 
         emit('guardar-paciente')
+        /* ↑ Qué hace: Si la validación es exitosa, emite el evento guardar-paciente. Beneficio: El componente hijo notifica al padre que los datos son válidos y están listos para guardarse. */
 
     }
 
@@ -110,7 +116,8 @@
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
                     :value="propietario"
                     @input="$emit('update:propietario', $event.target.value)"
-                />
+                /><!-- Qué hace: Vincula cada campo con su respectiva prop y emite cambios.
+                       Beneficio: Cualquier cambio en cualquier campo se sincroniza automáticamente con App.vue. -->
             </div>
 
             <!-- Campo para Email de Contacto-->
@@ -167,6 +174,17 @@
                     @input="$emit('update:sintomas', $event.target.value)"
                 />
             </div>
+            <!-- Flujo completo de Datos: 
+                Usuario escribe en input
+                ↓
+                2. @input emite 'update:nombre' con el nuevo valor
+                ↓
+                3. v-model:nombre en App.vue recibe el valor
+                ↓
+                4. paciente.nombre se actualiza
+                ↓
+                5. :value="nombre" refleja el cambio en el input
+            -->
 
             <!-- Botón para Registrar Paciente -->
             <input
@@ -174,6 +192,17 @@
                 class="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
                 value="Registrar Paciente"
             >
+            <!-- Flujo de Guardado: 
+            1. Usuario hace clic en "Registrar Paciente"
+            ↓
+            2. Se ejecuta validar() en Formulario
+            ↓
+            3. Si es válido → emit('guardar-paciente')
+            ↓
+            4. App.vue escucha y ejecuta guardarPaciente()
+            ↓
+            5. paciente se agrega al array pacientes
+            -->
 
         </form>
     </div>
