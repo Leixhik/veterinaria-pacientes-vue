@@ -7,7 +7,7 @@
         mensaje: ''
     })
 
-    defineEmits(['update:nombre', 'update:propietario', 'update:email', 'update:alta', 'update:sintomas']) 
+    const emit = defineEmits(['update:nombre', 'update:propietario', 'update:email', 'update:alta', 'update:sintomas', 'guardar-paciente']) 
     // Declara que el componente Formulario pueda emitir un evento llamado update:nombre
     /* Esto permite la comunicación del componente hijo (Formulario) hacia el padre (App.vue), enviando cambios del input hacia arriba. */
 
@@ -48,6 +48,8 @@
             alerta.tipo = 'error'
             return
         }
+
+        emit('guardar-paciente')
 
     }
 

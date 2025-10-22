@@ -13,6 +13,10 @@
       sintomas: ''
   })
 
+  const guardarPaciente = () => {
+    pacientes.value.push(paciente)
+  }
+
 </script>
 
 <template>
@@ -26,9 +30,11 @@
           v-model:email="paciente.email"
           v-model:alta="paciente.alta"
           v-model:sintomas="paciente.sintomas"
+          @guardar-paciente="guardarPaciente"
       /><!-- En App.vue usas: v-model:nombre="paciente.nombre"
         En Formulario.vue recibes la prop nombre y emites update:nombre
         Esto crea una sincronización bidireccional automática -->
+        
 
       <div class="md:w-1/2 md:h-screen overflow-y-scroll">
         <h3 class="font-black text-3xl text-center">Administra a tus Pacientes</h3>
