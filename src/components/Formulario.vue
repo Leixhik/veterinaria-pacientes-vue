@@ -7,11 +7,28 @@
         mensaje: ''
     })
 
-    defineEmits(['update:nombre']) // Declara que el componente Formulario pueda emitir un evento llamado update:nombre
+    defineEmits(['update:nombre', 'update:propietario', 'update:email', 'update:alta', 'update:sintomas']) 
+    // Declara que el componente Formulario pueda emitir un evento llamado update:nombre
     /* Esto permite la comunicación del componente hijo (Formulario) hacia el padre (App.vue), enviando cambios del input hacia arriba. */
 
     const props = defineProps({
         nombre: {
+            type: String,
+            required: true
+        },
+        propietario: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            required: true
+        },
+        alta: {
+            type: String,
+            required: true
+        },
+        sintomas: {
             type: String,
             required: true
         }
@@ -26,7 +43,7 @@
 
 
     const validar = () => {
-        if(Object.values(paciente).includes('')){
+        if(Object.values(props).includes('')){
             alerta.mensaje = 'Todos los campos son obligatorios'
             alerta.tipo = 'error'
             return
@@ -58,7 +75,6 @@
             <!-- Campo para Datos Perro -->
             <div class="mb-5">
 
-                {{ nombre }}
                 <label
                     for="mascota"
                     class="block text-gray-700 uppercase font-bold"
@@ -71,6 +87,7 @@
                     type="text"
                     placeholder="Nombre de la Mascota"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    :value="nombre"
                     @input="$emit('update:nombre', $event.target.value)"
                 />
             </div>
@@ -89,7 +106,8 @@
                     type="text"
                     placeholder="Nombre del Propietario"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-
+                    :value="propietario"
+                    @input="$emit('update:propietario', $event.target.value)"
                 />
             </div>
 
@@ -107,7 +125,8 @@
                     type="email"
                     placeholder="Email del Propietario"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-
+                    :value="email"
+                    @input="$emit('update:email', $event.target.value)"
                 />
             </div>
 
@@ -124,6 +143,8 @@
                     id="alta"
                     type="date"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+                    :value="alta"
+                    @input="$emit('update:alta', $event.target.value)"
                 />
             </div>
 
@@ -140,7 +161,8 @@
                     id="sintomas"
                     placeholder="Describe los síntomas del paciente:"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md h-40"
-
+                    :value="sintomas"
+                    @input="$emit('update:sintomas', $event.target.value)"
                 />
             </div>
 
