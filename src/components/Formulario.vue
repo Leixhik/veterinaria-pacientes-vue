@@ -7,7 +7,8 @@
         mensaje: ''
     })
 
-    defineEmits(['update:nombre'])
+    defineEmits(['update:nombre']) // Declara que el componente Formulario pueda emitir un evento llamado update:nombre
+    /* Esto permite la comunicación del componente hijo (Formulario) hacia el padre (App.vue), enviando cambios del input hacia arriba. */
 
     const props = defineProps({
         nombre: {
@@ -15,6 +16,13 @@
             required: true
         }
     })
+    /**
+     * Props del componente Formulario
+     * 
+     * @property {String} nombre - Nombre del paciente (requerido)
+     * Este prop es obligatorio y debe ser de tipo String. Se utiliza para
+     * identificar al paciente en el formulario de registro veterinario.
+     */
 
 
     const validar = () => {
