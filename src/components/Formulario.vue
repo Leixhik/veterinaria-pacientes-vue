@@ -7,13 +7,7 @@
         mensaje: ''
     })
 
-    const paciente = reactive({
-        nombre: '',
-        propietario: '',
-        email: '',
-        alta: '',
-        sintomas: ''
-    })
+
 
     const validar = () => {
         if(Object.values(paciente).includes('')){
@@ -59,7 +53,6 @@
                     type="text"
                     placeholder="Nombre de la Mascota"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                    v-model="paciente.nombre"
                 />
             </div>
 
@@ -77,7 +70,6 @@
                     type="text"
                     placeholder="Nombre del Propietario"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                    v-model="paciente.propietario"
 
                 />
             </div>
@@ -96,7 +88,6 @@
                     type="email"
                     placeholder="Email del Propietario"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                    v-model="paciente.email"
 
                 />
             </div>
@@ -114,8 +105,6 @@
                     id="alta"
                     type="date"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                    v-model="paciente.alta"
-
                 />
             </div>
 
@@ -132,7 +121,6 @@
                     id="sintomas"
                     placeholder="Describe los síntomas del paciente:"
                     class="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md h-40"
-                    v-model="paciente.sintomas"
 
                 />
             </div>
