@@ -1,12 +1,14 @@
 <script setup>
   import { ref, reactive } from 'vue'
+  import { uid } from 'uid';
   import Header from './components/Header.vue';
   import Formulario from './components/Formulario.vue';
   import Paciente from './components/Paciente.vue';
-  
+
   const pacientes = ref ([])
 
   const paciente = reactive({
+      id: null,
       nombre: '',
       propietario: '',
       email: '',
@@ -16,17 +18,11 @@
 
   const guardarPaciente = () => {
     pacientes.value.push({
-      ...paciente
+      ...paciente,
+      id: uid()
   })
 
-  // Reiniciar Objeto
-  // paciente.nombre = ''
-  // paciente.propietario = ''
-  // paciente.email = ''
-  // paciente.alta = ''
-  // paciente.sintomas = ''
-
-  // Otra forma (mejor)
+  // Reiniciar objeto (mejor)
   Object.assign(paciente, {
       nombre: '',
       propietario: '',
@@ -35,7 +31,7 @@
       sintomas: ''
    })
   }
-  /* ↑ Qué hace: Agrega el paciente actual al array de pacientes. 
+  /* ↑ Qué hace: Agrega el paciente actual al array de pacientes.
   Beneficio: Ahora puedes almacenar múltiples pacientes en tu aplicación. */
 
 </script>
@@ -62,7 +58,7 @@
 
         <div v-if="pacientes.length > 0">
           <p class="text-lg mt-5 text-center mb-10">
-            Información de 
+            Información de
             <span class="text-indigo-600 font-bold">Pacientes</span>
           </p>
 
@@ -77,4 +73,3 @@
     </div>
   </div>
 </template>
-
