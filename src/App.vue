@@ -34,6 +34,10 @@
   /* ↑ Qué hace: Agrega el paciente actual al array de pacientes.
   Beneficio: Ahora puedes almacenar múltiples pacientes en tu aplicación. */
 
+  const actualizarPaciente = (id) => {
+    console.log('actualizando... ', id)
+  }
+
 </script>
 
 <template>
@@ -65,6 +69,7 @@
           <Paciente
             v-for="paciente in pacientes"
             :paciente="paciente"
+            @actualizar-paciente ="actualizarPaciente"
           />
         </div>
         <p v-else class="mt-10 text-2xl text-center">No hay pacientes</p>
