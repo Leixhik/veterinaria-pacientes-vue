@@ -57,6 +57,16 @@
         emit('guardar-paciente')
         /* ↑ Qué hace: Si la validación es exitosa, emite el evento guardar-paciente. Beneficio: El componente hijo notifica al padre que los datos son válidos y están listos para guardarse. */
 
+        alerta.mensaje = 'Paciente Almacenado Correctamente'
+        alerta.tipo = 'exito'
+
+        setTimeout(() => {
+            Object.assign(alerta, {
+                tipo: '',
+                mensaje: ''
+            })
+        }, 3000)
+
     }
 
 </script>

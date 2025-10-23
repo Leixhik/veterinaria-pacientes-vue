@@ -15,7 +15,25 @@
   })
 
   const guardarPaciente = () => {
-    pacientes.value.push(paciente)
+    pacientes.value.push({
+      ...paciente
+  })
+
+  // Reiniciar Objeto
+  // paciente.nombre = ''
+  // paciente.propietario = ''
+  // paciente.email = ''
+  // paciente.alta = ''
+  // paciente.sintomas = ''
+
+  // Otra forma (mejor)
+  Object.assign(paciente, {
+      nombre: '',
+      propietario: '',
+      email: '',
+      alta: '',
+      sintomas: ''
+   })
   }
   /* ↑ Qué hace: Agrega el paciente actual al array de pacientes. 
   Beneficio: Ahora puedes almacenar múltiples pacientes en tu aplicación. */
