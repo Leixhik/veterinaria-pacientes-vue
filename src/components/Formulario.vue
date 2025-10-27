@@ -1,5 +1,5 @@
 <script setup>
-    import { reactive } from 'vue'
+    import { reactive, computed } from 'vue'
     import Alerta from './Alerta.vue'
 
     const alerta = reactive({
@@ -8,15 +8,19 @@
     })
 
     /* ↓ Qué hace: Agrega un nuevo evento para notificar cuando se debe guardar el paciente. Beneficio: Separa la lógica de validación (en Formulario) de la lógica de guardado (en App). */
-    const emit = defineEmits(['update:nombre', 'update:propietario', 'update:email', 'update:alta', 'update:sintomas', 'guardar-paciente']) 
-    // ↑ Declara que el componente Formulario pueda emitir un evento llamado update:nombre
+    const emit = defineEmits(['update:nombre', 'update:propietario', 'update:email', 'update:alta', 'update:sintomas', 'guardar-paciente'])
+    // ↑ Declara que el componente Formulario p ueda emitir un evento llamado update:nombre
     /* Esto permite la comunicación del componente hijo (Formulario) hacia el padre (App.vue), enviando cambios del input hacia arriba. */
     /* Qué hace: Declara todos los eventos que el componente puede emitir.
        Beneficio: Ahora TODOS los campos del formulario tienen comunicación bidireccional con App.vue, no solo el nombre. */
 
-    const props = defineProps({ 
+    const props = defineProps({
     /* ↑ ↓ Qué hace: Define todas las propiedades que el componente recibe del padre.
     Beneficio: El formulario ahora puede recibir y mostrar datos completos del paciente. */
+        id:{
+            type:[String, null],
+            required:true
+        },
         nombre: {
             type: String,
             required: true
@@ -40,7 +44,7 @@
     })
     /**
      * ↑ Props del componente Formulario
-     * 
+     *
      * @property {String} nombre - Nombre del paciente (requerido)
      * Este prop es obligatorio y debe ser de tipo String. Se utiliza para
      * identificar al paciente en el formulario de registro veterinario.
@@ -68,6 +72,10 @@
         }, 3000)
 
     }
+
+    const editando = computed(() => {
+        return props.id
+    })
 
 </script>
 
@@ -184,7 +192,7 @@
                     @input="$emit('update:sintomas', $event.target.value)"
                 />
             </div>
-            <!-- Flujo completo de Datos: 
+            <!-- Flujo completo de Datos:
                 Usuario escribe en input
                 ↓
                 2. @input emite 'update:nombre' con el nuevo valor
@@ -199,10 +207,10 @@
             <!-- Botón para Registrar Paciente -->
             <input
                 type="submit"
-                class="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-                value="Registrar Paciente"
+                class="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-                pointer transition-colors"
+                :value="[editando ? 'Guardar Cambios' : 'Registrar Paciente']"
             >
-            <!-- Flujo de Guardado: 
+            <!-- Flujo de Guardado:
             1. Usuario hace clic en "Registrar Paciente"
             ↓
             2. Se ejecuta validar() en Formulario

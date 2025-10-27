@@ -19,8 +19,8 @@ const paciente = reactive({
 const guardarPaciente = () => {
   if (paciente.id) {
     const { id } = paciente
-    const i = pacientes.value.findIndex((pacienteState) => pacienteState.id === id )
-    pacientes.value[i] = {...paciente}
+    const i = pacientes.value.findIndex(paciente => paciente.id === id)
+    pacientes.value[i] = { ...paciente }
   } else {
     pacientes.value.push({
       ...paciente,
@@ -48,6 +48,10 @@ const actualizarPaciente = (id) => {
   Object.assign(paciente, pacienteEditar)
 }
 
+const eliminarPaciente = (id) => {
+  pacientes.value = pacientes.value.filter(paciente => paciente.id !== id)
+}
+
 </script>
 
 <template>
@@ -55,9 +59,14 @@ const actualizarPaciente = (id) => {
     <Header />
 
     <div class="mt-12 md:flex">
-      <Formulario v-model:nombre="paciente.nombre" v-model:propietario="paciente.propietario"
-        v-model:email="paciente.email" v-model:alta="paciente.alta" v-model:sintomas="paciente.sintomas"
-        @guardar-paciente="guardarPaciente" /><!-- ↑ En App.vue usas: v-model:nombre="paciente.nombre"
+      <Formulario
+        v-model:nombre="paciente.nombre"
+        v-model:propietario="paciente.propietario"
+        v-model:email="paciente.email"
+        v-model:alta="paciente.alta"
+        v-model:sintomas="paciente.sintomas"
+        @guardar-paciente="guardarPaciente"
+        :id="paciente.id" /><!-- ↑ En App.vue usas: v-model:nombre="paciente.nombre"
         En Formulario.vue recibes la prop nombre y emites update:nombre
         Esto crea una sincronización bidireccional automática -->
       <!-- Qué hace: Conecta el evento emitido por Formulario con la función en App. Beneficio: Cuando el usuario hace clic en "Registrar Paciente", se ejecuta la lógica de guardado. -->
@@ -71,7 +80,11 @@ const actualizarPaciente = (id) => {
             <span class="text-indigo-600 font-bold">Pacientes</span>
           </p>
 
-          <Paciente v-for="paciente in pacientes" :paciente="paciente" @actualizar-paciente="actualizarPaciente" />
+          <Paciente
+            v-for="paciente in pacientes"
+            :paciente="paciente"
+            @actualizar-paciente="actualizarPaciente"
+            @eliminar-paciente ="eliminarPaciente" />
         </div>
         <p v-else class="mt-10 text-2xl text-center">No hay pacientes</p>
 
